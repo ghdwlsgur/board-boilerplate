@@ -1,5 +1,8 @@
 
-ssh -v -i /Users/hongjinhyeok/downloads/chaining-aws.pem ec2-user@ec2-35-173-134-76.compute-1.amazonaws.com
+ssh -v -i /Users/hongjinhyeok/downloads/chaining-aws.pem ec2-user@ec2-54-81-178-118.compute-1.amazonaws.com
+ssh -v -i /Users/hongjinhyeok/downloads/AWS-EC2.pem ec2-user@ec2-13-124-53-30.ap-northeast-2.compute.amazonaws.com
+ssh -v -i /Users/hongjinhyeok/downloads/chaining-aws.pem ec2-user@ec2-13-124-53-30.ap-northeast-2.compute.amazonaws.com
+
 permission denied 뜰 경우
 chmod 400 /Users/hongjinhyeok/downloads/chaining-aws.pem
 

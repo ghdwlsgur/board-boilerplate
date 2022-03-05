@@ -14,10 +14,10 @@ nvm install node
 node -v
 npm -v
 
-yarn 설치 
+1. yarn 설치 
 npm install yarn -g
 
-install Yarn using Script
+2. install Yarn using Script
 curl -o- -L https://yarnpkg.com/install.sh | bash
 
 git clone https://github.com/ragnarok-forU/chaining-server.git
@@ -25,3 +25,33 @@ git clone https://github.com/ragnarok-forU/chaining-server.git
 
 git private 저장소 로그인 생략하기
 git remote set-url origin https://<your-access-token>@github.com/username/repo.git
+
+
+trouble shooting
+기존에 설치했던 mysql57-community-release-el7-11.noarch와 충돌
+yum remove mysql57-community-release-el7-11.noarch
+
+
+스크린샷 참고
+sudo yum list installed | grep mysql
+sudo yum remove mysql80-community-release.noarch
+sudo yum clean all --verbose
+sudo yum update
+rpm -Uvh https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm
+sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/mysql-community.repo
+yum --enablerepo=mysql80-community install mysql-community-server 
+
+GPG ERROR
+
+import the new GPG key
+rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
+– Re-run STEP #3 Install MySQL Community Server
+yum --enablerepo=mysql80-community install mysql-community-server
+
+mysql -V
+Double check that no errors when running yum update
+sudo yum update
+
+sudo systemctl start mysqld
+sudo systemctl status mysqld

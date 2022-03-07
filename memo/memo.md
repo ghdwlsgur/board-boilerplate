@@ -127,4 +127,58 @@ FLUSH PRIVILEGES;
 
 systemctl restart mysqld
 
+## 탄력적 IP 생성 및 EC2 인스턴스와 연결
+
 ## 호스트명은 탄력적 IP주소로 접근할 것.
+
+### RDS 생성하는 법
+
+AWS Console > RDS
+
+표준 생성
+엔진 옵션: MySQL
+에디션: MySQL Community
+버전: MySQL 8.0.27 (EC2 mySQL 버전과 동일하게 설정해주었습니다.)
+템플릿: 프리티어
+
+DB 인스턴스 식별자: DB명
+마스터 사용자 이름 설정: (MySQL workbench로 접속시 Username에 할당)
+마스터 암호: (MySQL workbench로 접속시 입력하는 비밀번호)
+DB 인스턴스 클래스: 버스터블 클래스 db.t2.micro
+스토리지: 기본 설정
+가용성 및 내구성: 기본 설정
+퍼블릭 액세스 가능: 예
+VPC 보안 그룹: 새로 생성
+새 VPC 보안 그룹 이름: 보안 그룹명
+
+데이터베이스 인증: 암호 인증
+추가 구성: 초기 데이터베이스 이름 설정
+데이터베이스 생성
+
+데이터베이스가 생성되고 나서 보안 그룹과 파라미터 그룹을 수정합니다.
+
+보안 그룹 > 인바운드 규칙 > 유형: MYSQL/Aurora, 프로토콜 TCP, 포트 범위: 3306
+사용자 지정: EC2에 적용된 보안그룹을 검색하여 설정합니다.
+
+파라미터 그룹 생성
+
+## timezone 설정
+
+time_zone 검색, time_zone: Asia/Seoul
+
+## Character set utf-8 설정
+
+character_set 검색, 검색 결과 나오는 모든 파라미터의 값을 utf8mb4로 수정
+
+### collaction 검색
+
+collation 검색, collation_connection: utf8mb4_general_ci
+collation_server: utf8mb4_general_ci
+
+데이터베이스 수정 => 파라미터 그룹 => 생성한 파라미터 그룹으로 적용 (즉시 적용) => DB 재부팅
+
+## EC2에서 RDS 접속
+
+mysql -u 사용자명 -p -h Host주소
+사용자명: RDS 생성시 설정한 마스터 사용자 이름
+Host주소: RDS의 엔드포인트

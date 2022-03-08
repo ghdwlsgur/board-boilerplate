@@ -106,6 +106,10 @@ mysql -u root -p
 
 ALTER user 'root'@'localhost' identified with mysql_native_password by '새 비밀번호';
 
+## host 확인
+
+SELECT Host, User from user;
+
 ## User 생성
 
 CREATE USER 'hongjinhyeok'@'localhost' IDENTIFIED BY 'Gonnabea1right!';

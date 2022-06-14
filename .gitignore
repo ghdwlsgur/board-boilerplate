@@ -6,6 +6,7 @@ src/config/database
 .env.prod
 
 
+
 # Logs
 logs
 *.log
